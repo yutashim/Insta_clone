@@ -11,14 +11,16 @@
 </p>
 
 <p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
-
-<p>
   <strong>User image:</strong>
   <p>---</p>
-  <%= image_tag @user.user_image.url %>
+  <style>
+    .user_image {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+    }
+  </style>
+  <%= image_tag @user.user_image.url, class: "user_image" %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
