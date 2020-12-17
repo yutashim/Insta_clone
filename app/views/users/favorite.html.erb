@@ -1,0 +1,7 @@
+<% @favorite_posts.each do |post| %>
+  <div>
+    <%= post.sentence %><br>
+    <%= image_tag post.image.url %>
+    <%= link_to 'この投稿の詳細へ', post_path(post.id) %>
+  </div>
+<% end %>

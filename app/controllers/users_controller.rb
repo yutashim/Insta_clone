@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :favorite]
 
   # GET /users
   # GET /users.json
@@ -59,6 +59,10 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def favorite
+    @favorite_posts = @user.favorite_posts
   end
 
   private
