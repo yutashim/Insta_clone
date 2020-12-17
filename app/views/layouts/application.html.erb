@@ -12,6 +12,10 @@
   <body>
     <h4>action_name: <%= action_name %></h4>
     <p id="notice"><%= notice %></p>
+    <%= link_to '一覧', posts_path %>
+    <%= link_to '投稿', new_post_path  %>
+    <%= link_to 'ログイン', new_session_path %>
+    <%= link_to 'サインアップ', new_user_path %>
     <% if logged_in? %>
       <h4>current_user: <%= current_user.name %></h4>
       <%= link_to 'ログアウト', session_path(@current_user.id),

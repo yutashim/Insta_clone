@@ -24,16 +24,12 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
-
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    @post = current_user.posts.build(post_params)
+    if params[:back] || @post.invalid?
+      render :new
+    else
+      @post.save
+      redirect_to post_path(@post.id)
     end
   end
 
@@ -59,6 +55,11 @@ class PostsController < ApplicationController
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def confirm
+    @post = current_user.posts.build(post_params)
+    render :new if @post.invalid?
   end
 
   private
