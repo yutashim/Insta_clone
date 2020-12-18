@@ -31,6 +31,7 @@ class PostsController < ApplicationController
     else
       @post.save
       redirect_to post_path(@post.id)
+      NotificationMailer.notification_mail(@post).deliver
     end
   end
 
