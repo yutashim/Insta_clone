@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:edit]
   before_action :set_user, only: [:show, :edit, :update, :destroy, :favorite]
-
+  before_action :has_authority_to_edit_user?, only: [:edit]
   # GET /users
   # GET /users.json
   def index

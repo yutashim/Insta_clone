@@ -8,4 +8,17 @@ class ApplicationController < ActionController::Base
       redirect_to new_session_path
     end
   end
+
+  def has_authority_to_edit_user?
+    unless current_user&.id == params[:id]
+      redirect_to posts_path
+    end
+  end
+
+  def has_authority_to_edit_post?
+    unless @post.user_id == current_user.id
+      redirect_to posts_path
+    end
+  end
+
 end
