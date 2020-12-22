@@ -35,8 +35,8 @@ class PostsController < ApplicationController
       render :new
     else
       @post.save
-      NotificationMailer.notification_mail(@post).deliver
-      redirect_to post_path(@post.id)
+      NotificationMailer.notification_mail(@post).deliver if Rails.env == "development"
+      redirect_to post_path(id: @post.id)
     end
   end
 
