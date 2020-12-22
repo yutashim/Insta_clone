@@ -4,6 +4,10 @@ class PostsController < ApplicationController
   before_action :has_authority_to_edit_post?, only: [:edit]
   # GET /posts
   # GET /posts.json
+  def home
+    redirect_to posts_path
+  end
+
   def index
     @posts = Post.all
   end
@@ -31,8 +35,8 @@ class PostsController < ApplicationController
       render :new
     else
       @post.save
-      redirect_to post_path(@post.id)
       NotificationMailer.notification_mail(@post).deliver
+      redirect_to post_path(@post.id)
     end
   end
 
