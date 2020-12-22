@@ -1,7 +1,41 @@
-<% @favorite_posts.each do |post| %>
-  <div>
-    <%= post.sentence %><br>
-    <%= image_tag post.image.url %>
-    <%= link_to 'この投稿の詳細へ', post_path(post.id) %>
+<div class="card user-card">
+  <h4 class="card-header row">
+    <div class="col-lg-2 image-container">
+      <%= image_tag @user.user_image.url, class: "user-image" %>
+    </div>
+    <div class="col-lg-10 user-info">
+      <h5 class="mt-4">
+        <%= @user.name %>
+        <% if logged_in? %>
+          <% if @user.id == current_user.id %>
+            <%= link_to 'edit', edit_user_path(@user.id), class:'ml-3' %>
+          <% end %>
+        <% end %>
+      </h5>
+    </div>
+  </h4>
+  <div class="card-body">
+    <ul class="nav nav-tabs shown-user-nav">
+      <li class="nav-item">
+        <%= link_to '投稿', user_path(@user.id), class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'お気に入り', "/users/#{@user.id}/favorite", class: 'nav-link' %>
+      </li>
+    </ul>
   </div>
-<% end %>
+  <div class="container index-post-container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
+      <% @user.favorite_posts.each do |post| %>
+        <% if post.image && post.image.url %>
+          <div class="col">
+            <%= link_to (image_tag post.image.thumb.url, class: "index-post" ), post_path(post.id)
+            %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+
+</div>

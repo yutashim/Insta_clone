@@ -1,6 +1,26 @@
-.user_image {
+.user-card {
+  margin: 2rem auto;
+  padding: 0 2em;
+  width: 80%;
+  background-color: white;
+  border: ridge black 1px;
+}
+.user-image {
   border: solid darkgray 1px;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
+}
+.form-user-card {
+  padding: 2em;
+}
+.form-user-card input {
+  width: 100%;
+}
+.form-app-name {
+  font-family: 'Brush Script MT',sans-serif;
+  font-size: 5rem;
+  color: black;
+  margin-top: 0;
+  text-align: center;
 }

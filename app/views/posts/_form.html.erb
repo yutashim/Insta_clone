@@ -1,27 +1,35 @@
 <%= form_with(model: post, local: true, url: new_or_edit) do |form| %>
-  <% if post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= post.errors.count %>件のエラーが発生しました:</h2>
-
-      <ul>
-      <% post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="card post-card">
+    <h5 class="card-header row">
+      <div class="col-sm-2 image-container">
+        <%= image_tag current_user.user_image.url, class: "user-image" %>
+      </div>
+      <div class="col-sm-10 user-info">
+        <% if @post.id %>
+          <p><%= @post.user.name %></p>
+          <h4>投稿を編集する</h4>
+        <% else %>
+          <p><%= current_user.name %></p>
+          <h4>新規投稿する</h4>
+        <% end  %>
+      </div>
+    </h5>
+    <div class="card-body">
+      <h3 class="card-title">あなたの投稿</h3>
+      <%= image_tag(@post.image.url) if @post.image && @post.image.url %>
+      <h5 class="card-title">コンテンツを追加</h5>
+      <%= form.file_field :image %>
+      <%= form.hidden_field :image_cache %>
+      <h5 class="card-title">キャプションを入力</h5>
+      <%= form.text_area :sentence, size: '90x10', class: "post-textarea" %>
+      <div class="submit-btn-container">
+        <% if @post.id %>
+          <input type="submit" name="commit" value="保存する" class="btn btn-success" >
+        <% else %>
+          <input type="submit" name="commit" value="投稿する" class="btn btn-success" >
+        <% end %>
+      </div>
+      <%= link_to 'Back', posts_path %>
     </div>
+  </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :sentence %>
-    <%= form.text_area:sentence %>
-  </div>
-  <div class="field">
-    <%= image_tag(@post.image.url) if @post.image.present? %>
-    <%= form.file_field :image %>
-    <%= form.hidden_field :image_cache %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>

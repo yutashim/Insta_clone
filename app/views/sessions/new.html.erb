@@ -1,16 +1,27 @@
-<h3 style="color: red;"><%= flash[:notice] %></h3>
-<%= form_with(scope: :session, url: sessions_path, local: true) do |form| %>
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email %>
-  </div>
+<style>
+  .session-card {
+    width: 60%;
+    margin: 5rem auto;
+  }
+  .list-group-item input {
+    width: 100%;
+  }
+</style>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "ログイン" %>
+<%= form_with(scope: :session, local: true, url: sessions_path,
+class: 'card session-card') do |form| %>
+  <div class="card-body">
+    <h1 class="card-title form-app-name">Instagram</h1>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <%= form.email_field :email, placeholder: 'メールアドレスを入力してください。'%>
+      </li>
+      <li class="list-group-item">
+        <%= form.password_field :password, placeholder: 'パスワードを入力してください。'%>
+      </li>
+    </ul>
+    <div class="submit-btn-container">
+      <%= form.submit "ログイン", class:'btn btn-primary'%>
+    </div>
   </div>
 <% end %>

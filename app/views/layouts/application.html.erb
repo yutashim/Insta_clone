@@ -10,17 +10,23 @@
   </head>
 
   <body>
-    <h4>action_name: <%= action_name %></h4>
-    <%= link_to '一覧', posts_path %>
-    <%= link_to '投稿', new_post_path  %>
-    <%= link_to 'ログイン', new_session_path %>
-    <%= link_to 'サインアップ', new_user_path %>
-    <% if logged_in? %>
-      <h4>current_user: <%= current_user.name %></h4>
-      <%= link_to 'ログアウト', session_path(@current_user.id),
-      method: :delete %>
+    <header class="navbar navbar-light bg-light d-flex">
+      <div  class="navbar-brand flex-grow-1">
+      <a class="app-name" href="/posts">Instagram</a>
+      </div>
+      <%= link_to image_tag("index-users.png", class: 'nav-image'), posts_path %>
+      <%= link_to image_tag("new-post.png", class: 'nav-image'), new_post_path %>
+      <% if logged_in? %>
+        <%= link_to image_tag("logout.png", class: 'nav-image'), session_path(@current_user.id), method: :delete %>
+        <%= link_to image_tag("user.png", class: 'nav-image'), user_path(current_user.id) %>
+      <% else %>
+        <%= link_to image_tag("enter.png", class: 'nav-image'), new_session_path %>
+        <%= link_to image_tag("user.png", class: 'nav-image'), new_user_path %>
+      <% end %>
+    </header>
+    <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
     <% end %>
-
     <%= yield %>
   </body>
 </html>

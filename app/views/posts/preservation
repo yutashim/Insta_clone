@@ -1,0 +1,54 @@
+<div class="field">
+  <%= form.label :sentence %>
+  <%= form.text_area:sentence %>
+</div>
+<div class="field">
+  <%= image_tag(@post.image.url) if @post.image.present? %>
+  <%= form.file_field :image %>
+  <%= form.hidden_field :image_cache %>
+</div>
+
+<div class="actions">
+  <%= form.submit %>
+</div>
+
+
+<% if post.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= post.errors.count %>件のエラーが発生しました:</h2>
+    <ul>
+    <% post.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% if logged_in? %>
+  <% if current_user.id == @post.user_id %>
+    <%= link_to 'Edit', edit_post_path(@post.id) %>
+    <%= link_to 'Delete', post_path(@post.id), method: :delete %>
+  <% else %>
+    <% if @favorite %>
+      <%= link_to 'お気に入りを解除する', favorite_path(id: @post.id), method: :delete %>
+    <% else %>
+      <%= link_to 'お気に入り登録する', favorites_path(id: @post.id), method: :post %>
+    <% end %>
+<% end %>
+
+
+  <% unless current_user.id == @post.user_id %>
+    <% if @favorite %>
+      <%= link_to 'お気に入りを解除する', favorite_path(id: @post.id), method: :delete %>
+    <% else %>
+      <%= link_to 'お気に入り登録する', favorites_path(id: @post.id), method: :post %>
+    <% end %>
+  <% else %>
+  <% if !current_user.nil? && @post.user_id == current_user.id %>
+  <div>
+    <%= link_to 'Edit', edit_post_path(@post.id) %>
+    <%= link_to 'Delete', post_path(@post.id), method: :delete %>
+  </div>
+  <% end %>
+  <% end %>
+<% end %>

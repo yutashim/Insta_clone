@@ -4,19 +4,21 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user
     if current_user.nil?
-      flash[:notice] = 'ログインしてください'
+      flash[:alert] = 'ログインしてください'
       redirect_to new_session_path
     end
   end
 
   def has_authority_to_edit_user?
-    unless current_user&.id == params[:id]
+    unless params[:id].to_i == current_user.id
+      flash[:alert] = '他のユーザーの編集はできません'
       redirect_to posts_path
     end
   end
 
   def has_authority_to_edit_post?
     unless @post.user_id == current_user.id
+      flash[:alert] = '他のユーザーの投稿は編集はできません'
       redirect_to posts_path
     end
   end

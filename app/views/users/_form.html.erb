@@ -1,41 +1,41 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= user.errors.count %>件のエラーが発生しました:</h2>
-
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<style>
+  .media {
+    width: 80%;
+    margin: 5rem auto auto auto;
+  }
+</style>
+<div class="media row">
+  <img class="col-6" src="https://unsplash.it/400/600?random">
+  <div class="media-body col-6">
+    <%= form_with(model: user, local: true, class: 'card form-user-card') do |form| %>
+      <div class="card-body">
+        <h1 class="card-title form-app-name">Instagram</h1>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <%= form.email_field :email, placeholder: 'メールアドレスを入力してください。'%>
+          </li>
+          <li class="list-group-item">
+            <%= form.text_field :name, placeholder: '名前を入力してください。'%>
+          </li>
+          <li class="list-group-item">
+            <%= form.label :image, value="プロフィール画像が登録できます。"%>
+            <%= form.file_field :user_image %>
+          </li>
+          <% unless @user.id %>
+            <li class="list-group-item">
+              <%= form.text_field :password, placeholder: 'パスワードを入力してください。'%>
+            </li>
+            <li class="list-group-item">
+              <%= form.password_field :password_confirmation,
+              placeholder: '確認の為、もう一度入力してください。' %>
+            </li>
+          <% end %>
+        </ul>
+        <div class="submit-btn-container">
+          <%= form.submit class:'btn btn-primary'%>
+        </div>
+        <%= link_to 'Back', users_path %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_area :name %>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_area :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user_image %>
-    <%= form.file_field :user_image %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

@@ -14,7 +14,21 @@
  *= require_tree .
  *= require_self
  */
-.navbar-brand {
+.app-name {
   font-family: 'Brush Script MT',sans-serif;
-  font-size: 2em;
+  font-size: 2rem;
+  color: black;
+}
+.nav-image {
+  width: 25px;
+  margin: 1rem;
+}
+.submit-btn-container {
+  padding: 0 20%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+.text-area {
+  width: 90%;
 }

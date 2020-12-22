@@ -1,31 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @post.user.name %>
-</p>
-
-<p>
-  <strong>Sentence:</strong>
-  <%= @post.sentence %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @post.image.url %>
-</p>
-
-<% if logged_in? %>
-  <% unless current_user.id == @post.user_id %>
-    <% if @favorite %>
-      <%= link_to 'お気に入りを解除する', favorite_path(id: @post.id), method: :delete %>
-    <% else %>
-      <%= link_to 'お気に入り登録する', favorites_path(id: @post.id), method: :post %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<% if !current_user.nil? && @post.user_id == current_user.id %>
-  <%= link_to 'Edit', edit_post_path(@post) %>
-<% end %>
-<%= link_to 'Back', posts_path %>
+  <p id="notice"><%= notice %></p>
+  <div class="container shown-post-container">
+    <div class="media row">
+      <div class="col-sm-7 shown-image">
+        <% if @post.image && @post.image.url %>
+          <%= image_tag @post.image.url %>
+        <% else %>
+          <img src="https://via.placeholder.com/400x500?text=Picture+is+not+uploaded">
+        <% end %>
+      </div>
+      <div class="media-body col-sm-5">
+        <div class="shown-post-user">
+          <%= image_tag @post.user.user_image.url, class:'post-user-image' %>
+          <%= link_to @post.user.name, user_path(@post.user.id), class:'post-user-name'%>
+          <% if logged_in? %>
+            <% if current_user.id == @post.user_id %>
+              <%= link_to 'Edit', edit_post_path(@post.id) %>
+              <%= link_to 'Delete', post_path(@post.id), method: :delete %>
+            <% else %>
+              <% if @favorite %>
+                  <%= link_to 'お気に入りを解除する', favorite_path(id: @post.id), method: :delete %>
+                <% else %>
+                  <%= link_to 'お気に入り登録する', favorites_path(id: @post.id), method: :post %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="shown-post-sentence overflow-auto">
+          <%= @post.sentence %>
+        </div>
+          <%= link_to 'Back', posts_path %>
+        </div>
+      </div>
+    </div>
+  </div>
